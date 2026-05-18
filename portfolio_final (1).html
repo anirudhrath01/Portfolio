@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anirudh Rath — Performance Marketer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0c0c;
+    --surface: #141414;
+    --surface2: #1c1c1c;
+    --border: #2a2a2a;
+    --accent: #e8a020;
+    --accent2: #c4520a;
+    --text: #e8e2d9;
+    --muted: #6b6560;
+    --highlight: #f0c060;
+    --green: #22c55e;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --font-body: 'Lora', serif;
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 1000; opacity: 0.4;
+  }
+
+  /* HOOK BANNER */
+  .hook-banner {
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    padding: 0.65rem 4rem;
+    text-align: center;
+  }
+  .hook-banner p {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: #000;
+    text-transform: uppercase;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(12,12,12,0.92);
+    backdrop-filter: blur(14px);
+  }
+  .nav-logo { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.15em; color: var(--accent); text-transform: uppercase; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.12em; color: var(--muted); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* OPENING HOOK */
+  .opening-hook {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 3.5rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .opening-hook::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--accent), var(--accent2));
+  }
+  .hook-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 4rem; align-items: center;
+  }
+  .hook-eyebrow { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; margin-bottom: 1rem; }
+  .hook-headline { font-family: var(--font-display); font-size: clamp(1.8rem, 3.5vw, 2.8rem); line-height: 1.05; color: var(--text); margin-bottom: 1rem; letter-spacing: 0.02em; }
+  .hook-headline em { font-style: normal; color: var(--accent); }
+  .hook-body { font-size: 0.92rem; color: var(--muted); line-height: 1.85; max-width: 640px; }
+  .hook-body strong { color: var(--text); }
+  .hook-proof { display: flex; flex-direction: column; gap: 1rem; min-width: 200px; }
+  .proof-item { background: var(--bg); border: 1px solid var(--border); padding: 1rem 1.2rem; position: relative; }
+  .proof-item::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent); }
+  .proof-num { font-family: var(--font-display); font-size: 2.2rem; color: var(--accent); line-height: 1; letter-spacing: 0.03em; }
+  .proof-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-top: 0.2rem; }
+
+  /* HERO */
+  .hero {
+    display: grid; grid-template-columns: 1fr 1fr;
+    position: relative; overflow: hidden; min-height: 88vh;
+  }
+  .hero-bg-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(to right, rgba(232,160,32,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(232,160,32,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-left { padding: 5rem 3rem 4rem 4rem; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 2; }
+  .hero-tag { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+  .hero-tag::before { content: ''; display: block; width: 32px; height: 1px; background: var(--accent); }
+  .hero-name { font-family: var(--font-display); font-size: clamp(5rem, 9vw, 8rem); line-height: 0.92; letter-spacing: 0.02em; color: var(--text); margin-bottom: 0.5rem; animation: fadeUp 0.8s ease both; }
+  .hero-name span { color: var(--accent); display: block; }
+  .hero-tagline { font-family: var(--font-body); font-style: italic; font-size: 1.05rem; color: var(--muted); margin: 1.5rem 0 2.5rem; max-width: 400px; line-height: 1.7; animation: fadeUp 0.8s 0.15s ease both; }
+  .hero-cta-row { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.8s 0.3s ease both; }
+  .btn { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; padding: 0.85rem 1.8rem; border: none; cursor: pointer; transition: all 0.25s; display: inline-flex; align-items: center; gap: 0.6rem; }
+  .btn-primary { background: var(--accent); color: #000; }
+  .btn-primary:hover { background: var(--highlight); transform: translateY(-2px); }
+  .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+  .hero-right { position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; padding: 4rem; }
+  .hero-stats-card { background: var(--surface); border: 1px solid var(--border); padding: 2.5rem; width: 100%; max-width: 380px; animation: fadeUp 0.8s 0.4s ease both; position: relative; }
+  .hero-stats-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+  .stats-header { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.18em; color: var(--accent); text-transform: uppercase; margin-bottom: 1.5rem; }
+  .stat-row { display: flex; justify-content: space-between; align-items: baseline; padding: 0.85rem 0; border-bottom: 1px solid var(--border); }
+  .stat-row:last-child { border-bottom: none; }
+  .stat-label { font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted); letter-spacing: 0.08em; }
+  .stat-value { font-family: var(--font-display); font-size: 1.8rem; color: var(--text); letter-spacing: 0.03em; }
+  .stat-value.accent { color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 6rem 4rem; max-width: 1200px; margin: 0 auto; }
+  .section-tag { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.22em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.75rem; }
+  .section-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--accent); }
+  .section-title { font-family: var(--font-display); font-size: clamp(2.8rem, 5vw, 4.5rem); letter-spacing: 0.02em; line-height: 0.95; margin-bottom: 3rem; color: var(--text); }
+  .section-title em { font-style: normal; color: var(--accent); }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 0 4rem; }
+
+  /* WORK */
+  .work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5px; background: var(--border); border: 1px solid var(--border); }
+  .work-card { background: var(--surface); padding: 2.5rem; position: relative; overflow: hidden; transition: background 0.2s; }
+  .work-card.featured { grid-column: 1 / -1; }
+  .work-card:hover { background: var(--surface2); }
+  .work-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0; background: var(--accent); transition: height 0.4s ease; }
+  .work-card:hover::before { height: 100%; }
+  .work-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem; }
+  .work-category { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); background: rgba(232,160,32,0.08); padding: 0.25rem 0.7rem; border: 1px solid rgba(232,160,32,0.2); }
+  .work-year { font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted); }
+  .work-title { font-family: var(--font-display); font-size: 2.2rem; letter-spacing: 0.03em; color: var(--text); margin-bottom: 0.4rem; line-height: 1; }
+  .work-website { font-family: var(--font-mono); font-size: 0.68rem; color: var(--accent); text-decoration: none; letter-spacing: 0.08em; margin-bottom: 1rem; display: inline-block; border-bottom: 1px solid rgba(232,160,32,0.3); transition: border-color 0.2s; }
+  .work-website:hover { border-color: var(--accent); }
+  .work-sub { font-size: 0.88rem; color: var(--muted); font-style: italic; margin-bottom: 1.2rem; line-height: 1.6; }
+  .work-list { color: var(--muted); font-size: 0.88rem; padding-left: 1.2rem; line-height: 2.1; }
+  .work-list li strong { color: var(--text); }
+  .work-metrics { display: flex; gap: 2rem; flex-wrap: wrap; margin-top: 1.8rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+  .metric { display: flex; flex-direction: column; gap: 0.2rem; }
+  .metric-num { font-family: var(--font-display); font-size: 2rem; letter-spacing: 0.03em; color: var(--accent); line-height: 1; }
+  .metric-num.green { color: var(--green); }
+  .metric-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+  /* ROI CALLOUT */
+  .roi-callout { background: linear-gradient(135deg, rgba(232,160,32,0.08) 0%, rgba(196,82,10,0.05) 100%); border: 1px solid rgba(232,160,32,0.25); padding: 1.5rem 2rem; margin-top: 1.5rem; position: relative; overflow: hidden; }
+  .roi-callout::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+  .roi-callout-inner { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
+  .roi-big { font-family: var(--font-display); font-size: 3.5rem; color: var(--accent); line-height: 1; letter-spacing: 0.03em; }
+  .roi-text { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+  .roi-text strong { color: var(--text); display: block; font-size: 1rem; margin-bottom: 0.25rem; }
+
+  /* MASTERY */
+  .mastery-section { background: var(--surface); border: 1px solid var(--border); padding: 2.5rem; margin-bottom: 2rem; position: relative; }
+  .mastery-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+  .mastery-title { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; margin-bottom: 1.5rem; }
+  .mastery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; }
+  .mastery-item { display: flex; flex-direction: column; gap: 0.5rem; }
+  .mastery-row { display: flex; justify-content: space-between; align-items: center; }
+  .mastery-name { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text); }
+  .mastery-badge { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; padding: 0.15rem 0.5rem; text-transform: uppercase; }
+  .badge-master { background: rgba(232,160,32,0.12); color: var(--accent); border: 1px solid rgba(232,160,32,0.3); }
+  .badge-strong { background: rgba(34,197,94,0.08); color: var(--green); border: 1px solid rgba(34,197,94,0.25); }
+  .mastery-bar { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .mastery-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 1.2s ease; }
+  .mastery-fill.green-fill { background: linear-gradient(90deg, var(--green), #16a34a); }
+
+  /* SKILL CARDS */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5px; background: var(--border); border: 1px solid var(--border); }
+  .skill-card { background: var(--surface); padding: 2rem; transition: background 0.2s; position: relative; overflow: hidden; }
+  .skill-card:hover { background: var(--surface2); }
+  .skill-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--accent); transition: width 0.4s ease; }
+  .skill-card:hover::after { width: 100%; }
+  .skill-icon { font-size: 1.4rem; margin-bottom: 0.8rem; }
+  .skill-title { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text); margin-bottom: 0.4rem; }
+  .skill-desc { font-size: 0.86rem; color: var(--muted); line-height: 1.6; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
+  .tag { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.08em; padding: 0.2rem 0.6rem; border: 1px solid var(--border); color: var(--muted); background: var(--bg); }
+  .tag.accent-tag { border-color: var(--accent); color: var(--accent); background: rgba(232,160,32,0.06); }
+
+  /* ABOUT */
+  .about-layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: 5rem; align-items: start; }
+  .about-text p { color: var(--muted); font-size: 1rem; line-height: 1.8; margin-bottom: 1.2rem; }
+  .about-text p strong { color: var(--text); font-weight: 600; }
+  .about-stack { background: var(--surface); border: 1px solid var(--border); padding: 2rem; position: relative; }
+  .about-stack::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), transparent); }
+  .stack-title { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
+  .stack-item { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid var(--border); font-family: var(--font-mono); font-size: 0.78rem; }
+  .stack-item:last-child { border-bottom: none; }
+  .stack-name { color: var(--text); }
+  .stack-level { display: flex; gap: 4px; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border); }
+  .dot.filled { background: var(--accent); }
+
+  /* CONTACT */
+  .contact-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 6rem 4rem; }
+  .contact-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .contact-links { display: flex; flex-direction: column; gap: 0.85rem; margin-top: 2rem; }
+  .contact-link { display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--muted); font-family: var(--font-mono); font-size: 0.8rem; padding: 1.1rem 1.2rem; border: 1px solid var(--border); transition: all 0.25s; background: var(--bg); }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); transform: translateX(6px); }
+  .contact-link .link-icon { font-size: 1rem; min-width: 20px; }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 8px #22c55e; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  footer { padding: 2rem 4rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); max-width: 1200px; margin: 0 auto; }
+  footer span { font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.1em; }
+  .footer-accent { color: var(--accent); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* === CREATIVE ENHANCEMENTS === */
+
+  /* Animated glow on the big ROI number */
+  .roi-big {
+    position: relative;
+    display: inline-block;
+    text-shadow: 0 0 40px rgba(232,160,32,0.5), 0 0 80px rgba(232,160,32,0.2);
+    animation: roiPulseGlow 3s ease-in-out infinite;
+    cursor: default;
+    transition: transform 0.2s;
+  }
+  .roi-big:hover { transform: scale(1.04); }
+  @keyframes roiPulseGlow {
+    0%, 100% { text-shadow: 0 0 30px rgba(232,160,32,0.4), 0 0 60px rgba(232,160,32,0.15); }
+    50% { text-shadow: 0 0 60px rgba(232,160,32,0.8), 0 0 120px rgba(232,160,32,0.35), 0 0 4px #fff4; }
+  }
+
+  /* ROI callout border shimmer */
+  .roi-callout {
+    animation: borderShimmer 4s linear infinite;
+    background-size: 200% 200%;
+  }
+  @keyframes borderShimmer {
+    0% { box-shadow: 0 0 0 0 rgba(232,160,32,0); }
+    50% { box-shadow: 0 0 24px 2px rgba(232,160,32,0.18); }
+    100% { box-shadow: 0 0 0 0 rgba(232,160,32,0); }
+  }
+
+  /* Proof numbers glow on hover */
+  .proof-num {
+    transition: text-shadow 0.3s, transform 0.3s;
+  }
+  .proof-item:hover .proof-num {
+    text-shadow: 0 0 20px rgba(232,160,32,0.7);
+    transform: scale(1.05);
+    display: inline-block;
+  }
+
+  /* Metric numbers pop on hover */
+  .metric-num {
+    transition: transform 0.25s, text-shadow 0.25s;
+    display: inline-block;
+  }
+  .metric:hover .metric-num {
+    transform: scale(1.08) translateY(-2px);
+    text-shadow: 0 0 16px rgba(232,160,32,0.6);
+  }
+
+  /* Scrolling ticker in hook banner */
+  .hook-banner { overflow: hidden; padding: 0 !important; }
+  .ticker-track {
+    display: flex;
+    width: max-content;
+    animation: ticker 28s linear infinite;
+  }
+  .ticker-item {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: #000;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 0.65rem 3rem;
+  }
+  .ticker-sep { opacity: 0.5; padding: 0; }
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* Hero name shimmer on load */
+  .hero-name {
+    background: linear-gradient(90deg, var(--text) 0%, var(--accent) 45%, var(--text) 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeUp 0.8s ease both, nameShimmer 6s linear 1s infinite;
+  }
+  .hero-name span {
+    background: linear-gradient(90deg, var(--accent) 0%, var(--highlight) 50%, var(--accent) 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: nameShimmer 4s linear infinite;
+  }
+  @keyframes nameShimmer {
+    0% { background-position: 0% center; }
+    100% { background-position: -200% center; }
+  }
+
+  /* Stat rows highlight on hover */
+  .stat-row {
+    transition: background 0.2s, padding-left 0.2s;
+    border-radius: 2px;
+    padding-left: 0;
+  }
+  .stat-row:hover {
+    background: rgba(232,160,32,0.06);
+    padding-left: 8px;
+  }
+
+  /* Vertical accent line on opening hook animated */
+  .opening-hook::before {
+    animation: accentGrow 1.2s ease both;
+  }
+  @keyframes accentGrow {
+    from { height: 0; }
+    to { height: 100%; }
+  }
+
+  /* Counter number style */
+  .count-up { font-variant-numeric: tabular-nums; }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+  @media (max-width: 900px) {
+    .hook-banner { padding: 0.6rem 1.5rem; }
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .opening-hook { padding: 2.5rem 1.5rem; }
+    .hook-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .hook-proof { flex-direction: row; flex-wrap: wrap; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 3rem 1.5rem 1.5rem; }
+    .hero-right { padding: 1.5rem; }
+    .hero-stats-card { max-width: 100%; }
+    section { padding: 4rem 1.5rem; }
+    .divider { margin: 0 1.5rem; }
+    .work-grid { grid-template-columns: 1fr; }
+    .work-card.featured { grid-column: 1; }
+    .about-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    .contact-section { padding: 4rem 1.5rem; }
+    .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    .mastery-grid { grid-template-columns: 1fr 1fr; }
+    .roi-callout-inner { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HOOK BANNER -->
+<div class="hook-banner">
+  <div class="ticker-track" id="ticker">
+    <span class="ticker-item">⚡ ₹3L Ad Budget → ₹229 Crore Pipeline (7633X)</span>
+    <span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">7–8x ROAS D2C Brand</span>
+    <span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">10x ROAS Freelance Engagement</span>
+    <span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">−70% CPL · +80% Lead Volume</span>
+    <span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">Open to Remote Performance Marketing Roles</span>
+    <span class="ticker-item ticker-sep">◆</span>
+    <!-- duplicate for seamless loop -->
+    <span class="ticker-item">⚡ ₹3L Ad Budget → ₹229 Crore Pipeline (7633X)</span>
+    <span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">7–8x ROAS D2C Brand</span>
+    <span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">10x ROAS Freelance Engagement</span>
+    <span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">−70% CPL · +80% Lead Volume</span>
+    <span class="ticker-item ticker-sep">◆</span>
+    <span class="ticker-item">Open to Remote Performance Marketing Roles</span>
+    <span class="ticker-item ticker-sep">◆</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Anirudh Rath · PM</div>
+  <ul class="nav-links">
+    <li><a href="#hook">Why Me</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- OPENING HOOK -->
+<div class="opening-hook" id="hook">
+  <div class="hook-inner">
+    <div>
+      <div class="hook-eyebrow">// Why you should read this portfolio</div>
+      <h2 class="hook-headline">
+        Most marketers spend budgets.<br>
+        I build <em>revenue machines.</em>
+      </h2>
+      <p class="hook-body">
+        With a ₹3 Lakh ad budget, I generated a <strong>₹229 Crore project pipeline</strong> for a B2B renewable energy company — a <strong>7633X return on ad spend</strong>. I cut their cost-per-lead by <strong>70%</strong> and grew lead volume by <strong>80%</strong>. For an Ayurvedic D2C brand I co-founded from scratch, I built the entire paid funnel, WhatsApp API system, and influencer strategy — running at <strong>7–8x ROAS</strong>. For a freelance client, I delivered <strong>10x average ROAS</strong> with a complete Meta + WhatsApp sales funnel.<br><br>
+        I don't just run campaigns — I architect <strong>full-stack growth systems</strong> across paid media, creative, WhatsApp marketing, email nurture, and automation that compound into real business outcomes.
+      </p>
+    </div>
+    <div class="hook-proof">
+      <div class="proof-item">
+        <div class="proof-num">7633X</div>
+        <div class="proof-label">Pipeline ROAS · B2B</div>
+      </div>
+      <div class="proof-item">
+        <div class="proof-num">7–8x</div>
+        <div class="proof-label">ROAS · D2C Brand</div>
+      </div>
+      <div class="proof-item">
+        <div class="proof-num">10x</div>
+        <div class="proof-label">Avg ROAS · Freelance</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-left">
+    <div class="hero-tag">Performance Marketer · 2.5 Years Experience</div>
+    <h1 class="hero-name">
+      Anirudh<span>Rath.</span>
+    </h1>
+    <p class="hero-tagline">
+      Meta · Google · Amazon · Flipkart · WhatsApp API · Email · Automation.<br>
+      Full-stack performance marketing for D2C and B2B.
+    </p>
+    <div class="hero-cta-row">
+      <a href="#work" class="btn btn-primary">See My Work →</a>
+      <a href="https://drive.google.com/file/d/1_-FQ92woIk6Imds2ab_3KzPveZKTpUrJ/view?usp=drive_link" target="_blank" class="btn btn-ghost">📄 Download CV</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stats-card">
+      <div class="stats-header">// key_results.json</div>
+      <div class="stat-row">
+        <span class="stat-label">B2B Pipeline Generated</span>
+        <span class="stat-value accent">₹229 Cr</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Pipeline ROAS (B2B)</span>
+        <span class="stat-value accent">7633X</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">D2C Brand ROAS</span>
+        <span class="stat-value">7–8x</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Freelance Best ROAS</span>
+        <span class="stat-value accent">10x</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">CPL Reduction</span>
+        <span class="stat-value">−70%</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Lead Volume Growth</span>
+        <span class="stat-value accent">+80%</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- WORK -->
+<section id="work">
+  <div class="section-tag">Case Studies</div>
+  <h2 class="section-title fade-in">Selected<br><em>Work.</em></h2>
+
+  <div class="work-grid fade-in">
+
+    <!-- BIOFICS FEATURED -->
+    <div class="work-card featured">
+      <div class="work-meta">
+        <span class="work-category">B2B · Full-Time · Lead Generation</span>
+        <span class="work-year">2023 – Present</span>
+      </div>
+      <h3 class="work-title">Biofics Private Limited</h3>
+      <a href="https://biofics.co.in" target="_blank" class="work-website">↗ biofics.co.in</a>
+      <p class="work-sub">Full-funnel performance marketing for a B2B renewable energy machinery company — CBG plants, Organic Waste Converters (OWC), and Biogas systems. Targeting government bodies, large industrial enterprises, and MSME operators with deal sizes in the crore range.</p>
+
+      <div class="roi-callout">
+        <div class="roi-callout-inner">
+          <div class="roi-big">7633X</div>
+          <div class="roi-text">
+            <strong>₹3 Lakh Ad Budget → ₹229 Crore Project Pipeline</strong>
+            Generated ₹229 Cr in qualified B2B project opportunities from ₹3 Lakh in controlled ad spend across Meta and Google — a 7633X return in a high-ticket, long-cycle B2B market where most marketers struggle to even qualify leads.
+          </div>
+        </div>
+      </div>
+
+      <ul class="work-list" style="margin-top:1.5rem;">
+        <li><strong>Reduced cost-per-lead by 70%</strong> through systematic audience segmentation, creative rotation cycles, and bid strategy restructuring</li>
+        <li><strong>Increased qualified lead volume by 80%</strong> by rebuilding funnel architecture — TOF awareness → MOF qualification → BOF retargeting conversion</li>
+        <li>Managed Meta Ads and Google Ads end-to-end for crore-value machinery (CBG plants, OWC systems, Biogas equipment)</li>
+        <li>Built ad copy and creative strategy targeting decision-makers at government bodies, industrial groups, and large enterprises</li>
+        <li>Implemented conversion tracking, GA4, and lead scoring to filter genuine project inquiries from low-intent clicks</li>
+        <li>Managed campaign scaling without CPL degradation — maintained efficiency while growing volume simultaneously</li>
+      </ul>
+
+      <div class="work-metrics">
+        <div class="metric"><span class="metric-num">₹229 Cr</span><span class="metric-label">Pipeline Generated</span></div>
+        <div class="metric"><span class="metric-num">7633X</span><span class="metric-label">Pipeline ROAS</span></div>
+        <div class="metric"><span class="metric-num green">−70%</span><span class="metric-label">CPL Reduction</span></div>
+        <div class="metric"><span class="metric-num green">+80%</span><span class="metric-label">Lead Volume ↑</span></div>
+        <div class="metric"><span class="metric-num">₹3L</span><span class="metric-label">Total Ad Spend</span></div>
+      </div>
+    </div>
+
+    <!-- ASHWAMEGH -->
+    <div class="work-card">
+      <div class="work-meta">
+        <span class="work-category">D2C · Co-Founder · Ayurvedic Brand</span>
+        <span class="work-year">2024 – Present</span>
+      </div>
+      <h3 class="work-title">Ashwamegh Ayurveda</h3>
+      <p class="work-sub">Co-founded a D2C Ayurvedic personal care brand from zero — built brand identity, entire paid funnel, WhatsApp API automation, influencer marketing, and Amazon PPC infrastructure.</p>
+      <ul class="work-list">
+        <li>Achieved <strong>7–8x ROAS on Meta Ads</strong> via CTWA (Click-to-WhatsApp) funnel with EAR-based creative optimization and audience architecture</li>
+        <li>Built <strong>complete brand from scratch</strong> — positioning, visual identity, Charaka Samhita credibility anchors, packaging copy, D2C brand voice in Hinglish</li>
+        <li>Deployed <strong>WhatsApp API funnel</strong> (AiSensy/Wati) with ManyChat qualifier bots, automated broadcast sequences, and post-purchase retention flows</li>
+        <li>Designed and executed <strong>influencer marketing strategy</strong> — UGC scripting, creator briefing, performance-based creative iteration</li>
+        <li>Managed <strong>Amazon PPC</strong> (SP/SD/SB) for organic rank building alongside Meta paid funnel</li>
+        <li>Reduced <strong>RTO from ~55% to sub-30%</strong> through IVR order confirmation, NDR daily management, and courier diversification (Delhivery, Ekart)</li>
+      </ul>
+      <div class="work-metrics">
+        <div class="metric"><span class="metric-num accent">7–8x</span><span class="metric-label">ROAS on Meta</span></div>
+        <div class="metric"><span class="metric-num green">−45%</span><span class="metric-label">RTO Reduced</span></div>
+        <div class="metric"><span class="metric-num">Full</span><span class="metric-label">Stack Built</span></div>
+        <div class="metric"><span class="metric-num">WA API</span><span class="metric-label">Funnel Deployed</span></div>
+      </div>
+    </div>
+
+    <!-- FREELANCE -->
+    <div class="work-card">
+      <div class="work-meta">
+        <span class="work-category">Freelance · D2C · Photo Frames</span>
+        <span class="work-year">2022 – Present</span>
+      </div>
+      <h3 class="work-title">CustomShk.Frames</h3>
+      <p class="work-sub">Performance marketing engagement for a custom photo frame D2C business — built entire paid media system and WhatsApp sales funnel from the ground up.</p>
+      <ul class="work-list">
+        <li>Delivered <strong>10x average ROAS</strong> — highest-performing freelance engagement to date</li>
+        <li>Built <strong>complete Meta Ads sales funnel</strong> — cold audience awareness → engagement retargeting → purchase conversion with dynamic creative testing</li>
+        <li>Designed <strong>WhatsApp sales funnel</strong> for order conversion, cart recovery, and follow-up automation — significantly reduced checkout drop-off</li>
+        <li>Creative strategy: personalization-first hook writing, emotional gifting occasion triggers, urgency and scarcity framing for seasonal spikes</li>
+        <li>Campaign lifecycle management — setup, A/B testing, scaling, and weekly performance audits</li>
+      </ul>
+      <div class="work-metrics">
+        <div class="metric"><span class="metric-num accent">10x</span><span class="metric-label">Avg ROAS</span></div>
+        <div class="metric"><span class="metric-num">Full</span><span class="metric-label">Funnel Built</span></div>
+        <div class="metric"><span class="metric-num">WA</span><span class="metric-label">Sales Funnel</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-tag">Capabilities</div>
+  <h2 class="section-title fade-in">Core<br><em>Mastery.</em></h2>
+
+  <div class="mastery-section fade-in">
+    <div class="mastery-title">// platform_depth — ranked by experience &amp; results</div>
+    <div class="mastery-grid">
+      <div class="mastery-item">
+        <div class="mastery-row"><span class="mastery-name">Meta Ads</span><span class="mastery-badge badge-master">Master · Core</span></div>
+        <div class="mastery-bar"><div class="mastery-fill" data-width="98%" style="width:0%"></div></div>
+      </div>
+      <div class="mastery-item">
+        <div class="mastery-row"><span class="mastery-name">Google Ads</span><span class="mastery-badge badge-master">Master · Core</span></div>
+        <div class="mastery-bar"><div class="mastery-fill" data-width="92%" style="width:0%"></div></div>
+      </div>
+      <div class="mastery-item">
+        <div class="mastery-row"><span class="mastery-name">WhatsApp Marketing</span><span class="mastery-badge badge-strong">Strong</span></div>
+        <div class="mastery-bar"><div class="mastery-fill green-fill" data-width="87%" style="width:0%"></div></div>
+      </div>
+      <div class="mastery-item">
+        <div class="mastery-row"><span class="mastery-name">Email Marketing</span><span class="mastery-badge badge-strong">Strong</span></div>
+        <div class="mastery-bar"><div class="mastery-fill green-fill" data-width="76%" style="width:0%"></div></div>
+      </div>
+      <div class="mastery-item">
+        <div class="mastery-row"><span class="mastery-name">Amazon PPC</span><span class="mastery-badge badge-strong">Strong</span></div>
+        <div class="mastery-bar"><div class="mastery-fill" data-width="82%" style="width:0%"></div></div>
+      </div>
+      <div class="mastery-item">
+        <div class="mastery-row"><span class="mastery-name">Flipkart Ads</span><span class="mastery-badge badge-strong">Strong</span></div>
+        <div class="mastery-bar"><div class="mastery-fill" data-width="72%" style="width:0%"></div></div>
+      </div>
+      <div class="mastery-item">
+        <div class="mastery-row"><span class="mastery-name">Marketing Automation</span><span class="mastery-badge badge-strong">Strong</span></div>
+        <div class="mastery-bar"><div class="mastery-fill green-fill" data-width="78%" style="width:0%"></div></div>
+      </div>
+      <div class="mastery-item">
+        <div class="mastery-row"><span class="mastery-name">GA4 / Tracking</span><span class="mastery-badge badge-strong">Strong</span></div>
+        <div class="mastery-bar"><div class="mastery-fill" data-width="80%" style="width:0%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="skills-grid fade-in">
+    <div class="skill-card">
+      <div class="skill-icon">⚡</div>
+      <div class="skill-title">Meta Ads</div>
+      <p class="skill-desc">Full media buying depth: CPM/EAR optimization, CTWA funnels, CBO/ABO architecture, creative testing systems, CAPI & Offline Conversions.</p>
+      <div class="skill-tags"><span class="tag accent-tag">CTWA</span><span class="tag accent-tag">EAR Optimization</span><span class="tag accent-tag">CBO/ABO</span><span class="tag">CAPI</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔍</div>
+      <div class="skill-title">Google Ads</div>
+      <p class="skill-desc">Search, Display, Performance Max. Keyword architecture, Quality Score optimization, smart bidding, GA4 conversion tracking integration.</p>
+      <div class="skill-tags"><span class="tag accent-tag">Search</span><span class="tag accent-tag">PMax</span><span class="tag">GA4</span><span class="tag">Smart Bidding</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">💬</div>
+      <div class="skill-title">WhatsApp Marketing</div>
+      <p class="skill-desc">End-to-end funnel design: API setup (AiSensy, Wati), broadcast campaigns, ManyChat qualifier bots, post-purchase retention sequences.</p>
+      <div class="skill-tags"><span class="tag accent-tag">WhatsApp API</span><span class="tag accent-tag">ManyChat</span><span class="tag">Broadcast</span><span class="tag">Retention</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📧</div>
+      <div class="skill-title">Email Marketing</div>
+      <p class="skill-desc">Lifecycle nurture sequences, segmentation strategy, triggered automation for D2C and B2B pipelines, re-engagement and win-back flows.</p>
+      <div class="skill-tags"><span class="tag accent-tag">Nurture Flows</span><span class="tag">Segmentation</span><span class="tag">Win-Back</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🎬</div>
+      <div class="skill-title">Creative Strategy</div>
+      <p class="skill-desc">UGC & influencer scripting in Hinglish, emotion-first hook writing, price anchoring, founder-led video frameworks, D2C creative sequencing for LTV.</p>
+      <div class="skill-tags"><span class="tag accent-tag">UGC Scripts</span><span class="tag">Hinglish Copy</span><span class="tag">Hook Writing</span><span class="tag">Influencer Briefs</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🤖</div>
+      <div class="skill-title">Automation</div>
+      <p class="skill-desc">n8n, Make.com, Google Apps Script. Lead routing, WhatsApp follow-up systems, CRM syncs, and workflow automation for D2C and B2B operations.</p>
+      <div class="skill-tags"><span class="tag accent-tag">n8n</span><span class="tag">Make.com</span><span class="tag">Apps Script</span><span class="tag">Lead Routing</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-tag">Background</div>
+  <h2 class="section-title fade-in">The<br><em>Person.</em></h2>
+  <div class="about-layout fade-in">
+    <div class="about-text">
+      <p>I'm a <strong>23-year-old performance marketer</strong> based in Surat, Gujarat — 2.5 years of hands-on experience building paid media systems across Meta, Google, Amazon, and Flipkart that generate real, measurable revenue.</p>
+      <p>At <strong>Biofics Pvt. Ltd.</strong>, I manage B2B lead generation for high-ticket renewable energy machinery — ₹229 Crore in pipeline from ₹3 Lakh in ad spend, with 70% CPL reduction and 80% volume growth. Simultaneously, I co-founded <strong>Ashwamegh Ayurveda</strong> — a D2C Ayurvedic brand running at 7–8x ROAS with a full WhatsApp API funnel, influencer marketing engine, and Amazon PPC stack.</p>
+      <p>What sets me apart: I think in <strong>full systems</strong>, not just ad accounts. I connect creative, media buying, WhatsApp nurture, email automation, and analytics into one compounding revenue engine — and I have the results to prove it works.</p>
+    </div>
+    <div>
+      <div class="about-stack">
+        <div class="stack-title">// depth_by_platform</div>
+        <div class="stack-item"><span class="stack-name">Meta Ads</span><div class="stack-level"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></div></div>
+        <div class="stack-item"><span class="stack-name">Google Ads</span><div class="stack-level"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></div></div>
+        <div class="stack-item"><span class="stack-name">WhatsApp Marketing</span><div class="stack-level"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div></div>
+        <div class="stack-item"><span class="stack-name">Email Marketing</span><div class="stack-level"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div></div>
+        <div class="stack-item"><span class="stack-name">Amazon PPC</span><div class="stack-level"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div></div>
+        <div class="stack-item"><span class="stack-name">Marketing Automation</span><div class="stack-level"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></div></div>
+      </div>
+      <div style="background:var(--bg); border:1px solid var(--border); padding:1.5rem; margin-top:1.5px; border-top:none;">
+        <div style="display:flex; align-items:center; gap:0.75rem; font-family:var(--font-mono); font-size:0.75rem; color:var(--text); margin-bottom:0.5rem;">
+          <span class="status-dot"></span><span>Open to Remote Opportunities</span>
+        </div>
+        <div style="font-family:var(--font-mono); font-size:0.65rem; color:var(--muted); padding-top:0.75rem; border-top:1px solid var(--border); letter-spacing:0.08em; line-height:1.8;">
+          Full-time remote · Performance Marketing · D2C / E-Commerce / B2B<br>Surat, India · IST (UTC+5:30)
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" style="margin:0;">
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div>
+      <div class="section-tag">Get In Touch</div>
+      <h2 class="section-title fade-in" style="margin-bottom:1rem;">Let's<br><em>Connect.</em></h2>
+      <p style="color:var(--muted); font-size:0.95rem; line-height:1.8; max-width:380px;">Open to remote performance marketing roles, freelance engagements, and collaborations in D2C, e-commerce, or B2B growth.</p>
+    </div>
+    <div>
+      <div class="contact-links fade-in">
+        <a href="https://wa.me/917069892003" target="_blank" class="contact-link" style="border-color:rgba(34,197,94,0.3);">
+          <span class="link-icon">💬</span><span>WhatsApp · +91 70698 92003 &nbsp;(Fastest Response)</span>
+        </a>
+        <a href="mailto:anirudhrath@email.com" class="contact-link">
+          <span class="link-icon">✉</span><span>anirudhrath@email.com</span>
+        </a>
+        <a href="https://linkedin.com/in/anirudhrath" target="_blank" class="contact-link">
+          <span class="link-icon">in</span><span>linkedin.com/in/anirudhrath</span>
+        </a>
+        <a href="https://drive.google.com/file/d/1_-FQ92woIk6Imds2ab_3KzPveZKTpUrJ/view?usp=drive_link" target="_blank" class="contact-link" style="border-color:rgba(232,160,32,0.3);">
+          <span class="link-icon">📄</span><span>Download Resume (PDF) →</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>© 2025 <span class="footer-accent">Anirudh Rath</span></span>
+  <span style="font-size:0.6rem; letter-spacing:0.08em;">Built with intent.</span>
+  <span>Performance Marketer · Surat, IN</span>
+</footer>
+
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+
+  const barIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.mastery-fill').forEach(bar => {
+          const w = bar.getAttribute('data-width');
+          setTimeout(() => { bar.style.width = w; }, 120);
+        });
+        barIO.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.mastery-section').forEach(el => barIO.observe(el));
+
+  // Animated number counter for roi-big
+  function animateCounter(el, target, duration = 1800) {
+    const start = performance.now();
+    const isFloat = target % 1 !== 0;
+    function update(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      // ease out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(eased * target);
+      el.textContent = current.toLocaleString() + 'X';
+      if (progress < 1) requestAnimationFrame(update);
+      else el.textContent = target.toLocaleString() + 'X';
+    }
+    requestAnimationFrame(update);
+  }
+
+  const roiBig = document.querySelector('.roi-big');
+  if (roiBig) {
+    roiBig.textContent = '0X';
+    const roiIO = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          animateCounter(roiBig, 7633, 2000);
+          roiIO.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    roiIO.observe(roiBig);
+  }
+
+  // Animate proof-num for 7633X
+  const proofNums = document.querySelectorAll('.proof-num');
+  proofNums.forEach(el => {
+    if (el.textContent.includes('7633')) {
+      el.textContent = '0X';
+      const pIO = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            animateCounter(el, 7633, 1600);
+            pIO.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.5 });
+      pIO.observe(el);
+    }
+  });
+
+  // Stat row counter for 7633X
+  document.querySelectorAll('.stat-value').forEach(el => {
+    if (el.textContent.trim() === '7633X') {
+      el.textContent = '0X';
+      const sIO = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            animateCounter(el, 7633, 1400);
+            sIO.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.5 });
+      sIO.observe(el);
+    }
+  });
+</script>
+</body>
+</html>
